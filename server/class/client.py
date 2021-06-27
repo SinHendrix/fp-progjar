@@ -1,7 +1,8 @@
 import threading
 import ..settings
+from ..class.message_header import MessageHeader
 
-class MessageReceiver(threading.Thread):
+class Client(threading.Thread):
     def __init__(self, client, address):
         threading.Thread.__init__(self)
         self.client = client
@@ -19,14 +20,13 @@ class MessageReceiver(threading.Thread):
         return message_header.split("|")
 
     def run(self):
-        message_header = get_message_header()
-
-        if len(message_header) == 0:
-            break
-
         while True:
-            get_message_header()
+            message_header = get_message_header()
 
+            if len(message_header) == 0:
+                break
+
+            message_type = message_header[MessageHeader.message_type]
             if message_type == MessageType.Login:
                 pass
             elif message_type == MessageType.Register:
