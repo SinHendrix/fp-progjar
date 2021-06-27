@@ -1,5 +1,6 @@
 HOST = '0.0.0.0'
 RPC_PORT = 6666
 SOCKET_PORT = 6667
+SQLITE_URI = "sqlite://server.db"
 # RPC_PORT = 6668
 # SOCKET_PORT = 6669
