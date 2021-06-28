@@ -4,6 +4,7 @@ import ctypes
 from classes.message_type import MessageType
 from classes.message_header import MessageHeader
 from handler.register_handler import RegisterHandler
+from handler.login_handler import LoginHandler
 from utils.screen import clear_screen
 from utils.menu import Menu
 
@@ -22,7 +23,7 @@ class MessageReceiver(threading.Thread):
             message_type = message_header[MessageHeader.message_type]
 
             if message_type == MessageType.Login:
-                pass
+                LoginHandler.receive_message_handle(self.client, message_header)
             elif message_type == MessageType.Register:
                 RegisterHandler.receive_message_handle(self.client, message_header)
             elif message_type == MessageType.AddFriend:

@@ -3,6 +3,7 @@ from models.base import session
 from utils.message import receive_message, send_message
 from classes.message_header import MessageHeader
 from classes.message_type import MessageType
+from classes.client_state import ClientState
 import pickle
 import settings
 
@@ -39,6 +40,8 @@ class RegisterRepository:
         )
 
         session.add(user)
+        client.username = register_message.username
+        client.state = ClientState.Menu
 
         register_message.success = True
         register_message.message = "Register success!!"
