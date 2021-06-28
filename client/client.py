@@ -8,6 +8,7 @@ from utils.help import Help
 from handler.exit import client_exit
 from handler.login_handler import LoginHandler
 from handler.register_handler import RegisterHandler
+from handler.friend_handler import FriendHandler
 
 sock_cli = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock_cli.connect((settings.ADDRESS, settings.PORT))
@@ -36,7 +37,9 @@ if __name__ == "__main__":
                     RegisterHandler.input_handle(sock_cli)
             elif settings.CLIENT_STATE == ClientState.Menu and not Menu.check_if_help_or_menu(command) :
                 if command == Menu.AddFriend:
-                    pass
+                    FriendHandler.input_add_friend_handle(sock_cli)
+                elif command == Menu.ListFriend:
+                    FriendHandler.input_list_friend_handle(sock_cli)
                 elif command == Menu.Chat:
                     pass
                 elif command == Menu.JoinRoom:

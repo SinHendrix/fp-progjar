@@ -6,3 +6,4 @@ ENCODING = 'utf-8'
 BATCH_SIZE = 1024
 # PORT = 6668
 CLIENT_STATE = ClientState.Login
+USERNAME = None

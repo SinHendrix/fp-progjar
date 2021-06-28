@@ -2,6 +2,7 @@ class MessageType:
     Login = 'login'
     Register = 'register'
     AddFriend = 'add-friend'
+    ListFriend = 'list-friend'
     Message = 'message'
     File = 'file'
     JoinRoom = 'join-room'

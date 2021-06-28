@@ -25,7 +25,7 @@ class LoginRepository:
             login_message.message = "User not found"
             message = pickle.dumps(login_message)
             new_message_header = MessageHeader.make_header(
-                MessageType.Register,
+                MessageType.Login,
                 client.username,
                 len(message),
                 'server'

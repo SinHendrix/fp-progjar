@@ -3,9 +3,10 @@ class Menu:
     Register = 2
     Chat = 1
     AddFriend = 2
-    JoinRoom = 3
-    MakeRoom = 4
-    RandomRoom = 5
+    ListFriend = 3
+    JoinRoom = 4
+    MakeRoom = 5
+    RandomRoom = 6
     SendMessage = 1
     SendPicture = 2
     Help = 0

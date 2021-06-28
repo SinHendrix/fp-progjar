@@ -36,3 +36,4 @@ class RegisterHandler:
 
         if register_message.success:
             settings.CLIENT_STATE = ClientState.Menu
+            settings.USERNAME = register_message.username

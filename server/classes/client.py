@@ -6,6 +6,7 @@ from classes.message_type import MessageType
 from classes.client_state import ClientState
 from repositories.register_repository import RegisterRepository
 from repositories.login_repository import LoginRepository
+from repositories.friend_repository import FriendRepository
 
 
 class Client(threading.Thread):
@@ -38,7 +39,9 @@ class Client(threading.Thread):
                     continue
             elif self.state == ClientState.Menu and not MessageHeader.header_is_exit(message_header):
                 if message_type == MessageType.AddFriend:
-                    pass
+                    FriendRepository.handle_add_friend(self, message_header)
+                elif message_type == MessageType.ListFriend:
+                    FriendRepository.handle_list_friend(self, message_header)
                 elif message_type == MessageType.Message:
                     pass
                 elif message_type == MessageType.File:

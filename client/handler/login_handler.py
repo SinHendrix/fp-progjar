@@ -35,3 +35,4 @@ class LoginHandler:
 
         if login_message.success:
             settings.CLIENT_STATE = ClientState.Menu
+            settings.USERNAME = login_message.username
