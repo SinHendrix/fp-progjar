@@ -7,12 +7,13 @@ from classes.client_state import ClientState
 
 
 class Client(threading.Thread):
-    def __init__(self, client, address):
+    def __init__(self, client, address, clients):
         threading.Thread.__init__(self)
         self.client = client
         self.address = address
         self.state = ClientState.Login
         self.username = ""
+        self.clients = clients
 
     def change_state(new_state):
         self.state = new_state
@@ -26,14 +27,14 @@ class Client(threading.Thread):
 
             message_type = message_header[MessageHeader.message_type]
 
-            if self.state ==  ClientState.Login:
+            if self.state ==  ClientState.Login and not MessageHeader.header_is_exit(message_header):
                 if message_type == MessageType.Login:
                     pass
                 elif message_type == MessageType.Register:
                     pass
                 else :
                     continue
-            elif self.state == ClientState.Menu :
+            elif self.state == ClientState.Menu and not MessageHeader.header_is_exit(message_header):
                 if message_type == MessageType.AddFriend:
                     pass
                 elif message_type == MessageType.Message:
@@ -48,10 +49,14 @@ class Client(threading.Thread):
                     pass
                 else :
                     continue
-            elif self.state == ClientState.Turn:
+            elif self.state == ClientState.Turn and not MessageHeader.header_is_exit(message_header):
                 if message_type == MessageType.Attack:
                     pass
                 else :
                     continue
+            elif MessageHeader.header_is_exit(message_header):
+                print("Client ", self.address, " Exited")
+                self.clients.remove(self)
+                break
             else :
                 continue

@@ -12,7 +12,7 @@ class ClientState(enum.Enum):
 
     @staticmethod
     def check_if_playing():
-        if settings.CLIENT_STATE not in [ClientState.Playing, ClientState.Waiting, ClientState.Turn, ClientState.WaitForTurn]:
+        if settings.CLIENT_STATE in [ClientState.Playing, ClientState.Waiting, ClientState.Turn, ClientState.WaitForTurn]:
             return True
         else:
             return False

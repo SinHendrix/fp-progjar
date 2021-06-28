@@ -1,5 +1,6 @@
 import re
 import settings
+from classes.message_type import MessageType
 
 class MessageHeader:
     message_type = 0
@@ -30,3 +31,7 @@ class MessageHeader:
             message_header += data
 
         return message_header.split("|")
+
+    @staticmethod
+    def header_is_exit(message_header):
+        return message_header[MessageHeader.message_type] == MessageType.Exit

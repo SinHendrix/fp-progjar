@@ -18,3 +18,7 @@ class Menu:
     @staticmethod
     def get_command():
         return int(input())
+
+    @staticmethod
+    def check_if_help_or_menu(command):
+        return command == Menu.Help or command == Menu.Exit

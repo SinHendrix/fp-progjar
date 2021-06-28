@@ -15,41 +15,45 @@ if __name__ == "__main__":
     message_receiver = MessageReceiver(sock_cli)
     message_receiver.start()
 
-    while True:
-        command = None
+    try:
+        while True:
+            command = None
 
-        try:
-            Menu.prompting()
-            command = Menu.get_command()
-            clear_screen()
-        except Exception as e:
-            print("Insert the correct command")
-            continue
+            try:
+                Menu.prompting()
+                command = Menu.get_command()
+                clear_screen()
+            except Exception as e:
+                print("Insert the correct command")
+                continue
 
-        if settings.CLIENT_STATE ==  ClientState.Login:
-            if command == Menu.Login:
-                pass
-            elif command == Menu.Register:
-                pass
-        elif settings.CLIENT_STATE == ClientState.Menu :
-            if command == Menu.AddFriend:
-                pass
-            elif command == Menu.Chat:
-                pass
-            elif command == Menu.JoinRoom:
-                pass
-            elif command == Menu.MakeRoom:
-                pass
-            elif command == Menu.JoinRoom:
-                pass
-            elif command == Menu.RandomRoom:
-                pass
-        elif settings.CLIENT_STATE == ClientState.Turn:
-            if message_type == MessageType.Attack:
-                pass
-        elif command == Menu.Help :
-            Help.get_menu()
-        elif command == Menu.Exit and not ClientState.check_if_playing():
-            client_exit(message_receiver.client)
-        else :
-            continue
+            if settings.CLIENT_STATE ==  ClientState.Login and not Menu.check_if_help_or_menu(command) :
+                if command == Menu.Login:
+                    pass
+                elif command == Menu.Register:
+                    pass
+            elif settings.CLIENT_STATE == ClientState.Menu and not Menu.check_if_help_or_menu(command) :
+                if command == Menu.AddFriend:
+                    pass
+                elif command == Menu.Chat:
+                    pass
+                elif command == Menu.JoinRoom:
+                    pass
+                elif command == Menu.MakeRoom:
+                    pass
+                elif command == Menu.JoinRoom:
+                    pass
+                elif command == Menu.RandomRoom:
+                    pass
+            elif settings.CLIENT_STATE == ClientState.Turn and not Menu.check_if_help_or_menu(command) :
+                if message_type == MessageType.Attack:
+                    pass
+            elif command == Menu.Help :
+                Help.get_menu()
+            elif command == Menu.Exit and not ClientState.check_if_playing():
+                client_exit(message_receiver)
+                break
+            else :
+                continue
+    except Exception as e:
+        client_exit(message_receiver)

@@ -18,11 +18,11 @@ if __name__ == "__main__":
 
     while True:
         client_socket, client_address = sock_server.accept()
-        client = Client(client_socket, client_address)
+        client = Client(client_socket, client_address, clients)
         client.start()
         clients.append(client)
 
-        print("client with socket {} and address {} connected".format(client_socket, client_address))
+        print("client with address {} connected".format(client_address))
 
     for c in clients:
         c.join()
