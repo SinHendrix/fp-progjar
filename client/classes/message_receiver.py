@@ -1,31 +1,19 @@
 import threading
-import ..settings
+import settings
+from classes.message_type import MessageType
+from classes.message_header import MessageHeader
 
 class MessageReceiver(threading.Thread):
-    def __init__(self, client, address):
+    def __init__(self, client):
         threading.Thread.__init__(self)
         self.client = client
 
-    def get_message_header():
-        message_header = ""
-
-        while len(re.findall('\n', message_header)) < 4:
-            data = self.client.recv(1).decode(settings.ENCODING)
-
-            if len(data) == 0:
-                return ""
-            message_header += data
-
-        return message_header.split("|")
-
     def run(self):
-        message_header = get_message_header()
-
-        if len(message_header) == 0:
-            break
-
         while True:
-            get_message_header()
+            message_header = MessageHeader.get_message_header(self.client)
+
+            if len(message_header) == 0:
+                break
 
             if message_type == MessageType.Login:
                 pass

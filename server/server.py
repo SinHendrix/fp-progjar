@@ -1,8 +1,8 @@
-import classes.client
+from classes.client import Client
+from models import base
 import socket
 import threading
 import settings
-from models import base
 
 
 sock_server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -21,6 +21,8 @@ if __name__ == "__main__":
         client = Client(client_socket, client_address)
         client.start()
         clients.append(client)
+
+        print("client with socket {} and address {} connected".format(client_socket, client_address))
 
     for c in clients:
         c.join()
