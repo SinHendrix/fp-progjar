@@ -1,11 +1,14 @@
 import threading
-import ..settings
-from ..class.message_header import MessageHeader
+import settings
+import re
+from classes.message_header import MessageHeader
+from classes.message_type import MessageType
 
 class Client(threading.Thread):
     def __init__(self, client, address):
         threading.Thread.__init__(self)
         self.client = client
+        self.address = address
 
     def get_message_header():
         message_header = ""
