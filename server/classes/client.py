@@ -4,6 +4,7 @@ import re
 from classes.message_header import MessageHeader
 from classes.message_type import MessageType
 from classes.client_state import ClientState
+from repositories.register_repository import RegisterRepository
 
 
 class Client(threading.Thread):
@@ -31,7 +32,7 @@ class Client(threading.Thread):
                 if message_type == MessageType.Login:
                     pass
                 elif message_type == MessageType.Register:
-                    pass
+                    RegisterRepository.handle(self, message_header)
                 else :
                     continue
             elif self.state == ClientState.Menu and not MessageHeader.header_is_exit(message_header):

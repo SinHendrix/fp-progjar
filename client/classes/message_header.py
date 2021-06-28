@@ -16,7 +16,7 @@ class MessageHeader:
         sender,
         file_name = ""
     ):
-        return "|".join([message_type, destination, message_size, sender, file_name])
+        return "|".join([message_type, destination, str(message_size), sender, file_name, '\n\n\n\n'])
 
     @staticmethod
     def get_message_header(client):

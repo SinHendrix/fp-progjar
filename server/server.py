@@ -12,8 +12,6 @@ sock_server.listen(5)
 clients = []
 
 if __name__ == "__main__":
-    base.init()
-
     print("Server running with address {}".format(settings.ADDRESS + ":" + str(settings.PORT)))
 
     while True:

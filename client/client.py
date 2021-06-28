@@ -6,6 +6,8 @@ from utils.screen import clear_screen
 from utils.menu import Menu
 from utils.help import Help
 from handler.exit import client_exit
+from handler.login_handler import LoginHandler
+from handler.register_handler import RegisterHandler
 
 sock_cli = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock_cli.connect((settings.ADDRESS, settings.PORT))
@@ -29,9 +31,9 @@ if __name__ == "__main__":
 
             if settings.CLIENT_STATE ==  ClientState.Login and not Menu.check_if_help_or_menu(command) :
                 if command == Menu.Login:
-                    pass
+                    LoginHandler.input_handle(sock_cli)
                 elif command == Menu.Register:
-                    pass
+                    RegisterHandler.input_handle(sock_cli)
             elif settings.CLIENT_STATE == ClientState.Menu and not Menu.check_if_help_or_menu(command) :
                 if command == Menu.AddFriend:
                     pass
@@ -56,4 +58,5 @@ if __name__ == "__main__":
             else :
                 continue
     except Exception as e:
+        print(e)
         client_exit(message_receiver)
