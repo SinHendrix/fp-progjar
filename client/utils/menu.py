@@ -9,6 +9,10 @@ class Menu:
     RandomRoom = 6
     Shop = 7
     MyDeck = 8
+    CheckShop = 1
+    Buy = 2
+    CheckPoint = 3
+    ShopBack = 4
     SendMessage = 1
     SendPicture = 2
     Help = 0

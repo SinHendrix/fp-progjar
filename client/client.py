@@ -10,6 +10,7 @@ from handler.login_handler import LoginHandler
 from handler.register_handler import RegisterHandler
 from handler.friend_handler import FriendHandler
 from handler.deck_handler import DeckHandler
+from handler.shop_handler import ShopHandler
 
 sock_cli = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock_cli.connect((settings.ADDRESS, settings.PORT))
@@ -52,9 +53,18 @@ if __name__ == "__main__":
                 elif command == Menu.RandomRoom:
                     pass
                 elif command == Menu.Shop:
-                    pass
+                    ShopHandler.input_shop_handle(sock_cli)
                 elif command == Menu.MyDeck:
                     DeckHandler.handle(sock_cli)
+            elif settings.CLIENT_STATE == ClientState.Shop and not Menu.check_if_help_or_menu(command) :
+                if command == Menu.CheckShop:
+                    ShopHandler.input_check_shop_handle(sock_cli)
+                elif command == Menu.Buy:
+                    ShopHandler.input_buy_handle(sock_cli)
+                elif command == Menu.ShopBack:
+                    ShopHandler.input_back_handle(sock_cli)
+                elif command == Menu.CheckPoint:
+                    ShopHandler.input_check_point_handle(sock_cli)
             elif settings.CLIENT_STATE == ClientState.Turn and not Menu.check_if_help_or_menu(command) :
                 if message_type == MessageType.Attack:
                     pass

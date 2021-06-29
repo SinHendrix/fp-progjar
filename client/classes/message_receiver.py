@@ -7,6 +7,7 @@ from handler.register_handler import RegisterHandler
 from handler.friend_handler import FriendHandler
 from handler.login_handler import LoginHandler
 from handler.deck_handler import DeckHandler
+from handler.shop_handler import ShopHandler
 from utils.screen import clear_screen
 from utils.menu import Menu
 
@@ -46,6 +47,8 @@ class MessageReceiver(threading.Thread):
                 pass
             elif message_type == MessageType.Attack:
                 pass
+            elif message_type == MessageType.Shop:
+                ShopHandler.receive_message_handle(self.client, message_header)
             elif message_type == MessageType.MyDeck:
                 DeckHandler.receive_message_handle(self.client, message_header)
             else :

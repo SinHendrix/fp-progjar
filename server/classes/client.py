@@ -8,6 +8,7 @@ from repositories.register_repository import RegisterRepository
 from repositories.login_repository import LoginRepository
 from repositories.friend_repository import FriendRepository
 from repositories.deck_repository import DeckRepository
+from repositories.shop_repository import ShopRepository
 
 
 class Client(threading.Thread):
@@ -36,8 +37,6 @@ class Client(threading.Thread):
                     LoginRepository.handle(self, message_header)
                 elif message_type == MessageType.Register:
                     RegisterRepository.handle(self, message_header)
-                else :
-                    continue
             elif self.state == ClientState.Menu and not MessageHeader.header_is_exit(message_header):
                 if message_type == MessageType.AddFriend:
                     FriendRepository.handle_add_friend(self, message_header)
@@ -57,16 +56,16 @@ class Client(threading.Thread):
                     pass
                 elif message_type == MessageType.MyDeck:
                     DeckRepository.handle(self, message_header)
-                else :
-                    continue
+                elif message_type == MessageType.CheckShop:
+                    ShopRepository.handle_check_shop(self, message_header)
+                elif message_type == MessageType.CheckPoint:
+                    ShopRepository.handle_check_point(self, message_header)
+                elif message_type == MessageType.Buy:
+                    ShopRepository.handle_buy(self, message_header)
             elif self.state == ClientState.Turn and not MessageHeader.header_is_exit(message_header):
                 if message_type == MessageType.Attack:
                     pass
-                else :
-                    continue
             elif MessageHeader.header_is_exit(message_header):
                 print("Client ", self.address, " Exited")
                 self.clients.remove(self)
                 break
-            else :
-                continue

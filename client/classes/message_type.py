@@ -13,3 +13,6 @@ class MessageType:
     Exit = 'exit'
     MyDeck = 'my-deck'
     Shop = 'shop'
+    CheckShop = 'check-shop'
+    Buy = 'buy'
+    CheckPoint = 'check-point'

@@ -62,8 +62,6 @@ class RegisterRepository:
             session.add(user_card)
         session.commit()
 
-        session.commit()
-
         user = User.get_user_by_username(register_message.username)[0]
 
         client.username = register_message.username
