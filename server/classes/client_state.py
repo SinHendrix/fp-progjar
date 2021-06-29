@@ -8,3 +8,4 @@ class ClientState(enum.Enum):
     Turn = 4
     WaitForTurn = 5
     Chat = 6
+    Shop = 7

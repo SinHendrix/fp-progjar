@@ -11,3 +11,5 @@ class MessageType:
     GetRoom = 'random-room'
     Attack = 'attack'
     Exit = 'exit'
+    MyDeck = 'my-deck'
+    Shop = 'shop'

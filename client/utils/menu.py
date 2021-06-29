@@ -7,6 +7,8 @@ class Menu:
     JoinRoom = 4
     MakeRoom = 5
     RandomRoom = 6
+    Shop = 7
+    MyDeck = 8
     SendMessage = 1
     SendPicture = 2
     Help = 0
@@ -14,7 +16,7 @@ class Menu:
 
     @staticmethod
     def prompting():
-        print("Masukkan angka perintah (0 untuk help) > ", end='')
+        print("Masukkan angka perintah (0 untuk help) > ", end='', flush=True)
 
     @staticmethod
     def get_command():

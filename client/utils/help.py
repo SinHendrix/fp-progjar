@@ -4,7 +4,7 @@ import settings
 class Help:
     menu = {
         ClientState.Login : "1. Login\n2. Register",
-        ClientState.Menu : "1. Chat\n2. Add a Friend\n3. List Friend\n4. Join a Room\n5. Make a Room\n6. Random Room",
+        ClientState.Menu : "1. Chat\n2. Add a Friend\n3. List Friend\n4. Join a Room\n5. Make a Room\n6. Random Room\n7. Shop\n8. My Deck",
         ClientState.Chat : "1. Send Message\n2. Send Picture"
     }
 

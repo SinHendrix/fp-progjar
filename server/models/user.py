@@ -1,4 +1,5 @@
 from models.base import Base
+from models.base import session
 from sqlalchemy import Column, Integer, String, ForeignKey
 
 class User(Base):
@@ -16,3 +17,11 @@ class User(Base):
         self.points = points
         self.address = address
         self.port = port
+
+    @staticmethod
+    def get_user_by_id(id):
+        return session.query(User).filter_by(id=id).all()
+
+    @staticmethod
+    def get_user_by_username(username):
+        return session.query(User).filter_by(username=username).all()

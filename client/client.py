@@ -9,6 +9,7 @@ from handler.exit import client_exit
 from handler.login_handler import LoginHandler
 from handler.register_handler import RegisterHandler
 from handler.friend_handler import FriendHandler
+from handler.deck_handler import DeckHandler
 
 sock_cli = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock_cli.connect((settings.ADDRESS, settings.PORT))
@@ -50,6 +51,10 @@ if __name__ == "__main__":
                     pass
                 elif command == Menu.RandomRoom:
                     pass
+                elif command == Menu.Shop:
+                    pass
+                elif command == Menu.MyDeck:
+                    DeckHandler.handle(sock_cli)
             elif settings.CLIENT_STATE == ClientState.Turn and not Menu.check_if_help_or_menu(command) :
                 if message_type == MessageType.Attack:
                     pass

@@ -1,4 +1,4 @@
-from base import Base
+from models.base import Base
 from sqlalchemy import Column, Integer, String, ForeignKey
 
 class Card(Base):

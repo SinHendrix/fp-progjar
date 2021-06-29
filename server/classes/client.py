@@ -7,6 +7,7 @@ from classes.client_state import ClientState
 from repositories.register_repository import RegisterRepository
 from repositories.login_repository import LoginRepository
 from repositories.friend_repository import FriendRepository
+from repositories.deck_repository import DeckRepository
 
 
 class Client(threading.Thread):
@@ -52,6 +53,10 @@ class Client(threading.Thread):
                     pass
                 elif message_type == MessageType.RandomRoom:
                     pass
+                elif message_type == MessageType.Shop:
+                    pass
+                elif message_type == MessageType.MyDeck:
+                    DeckRepository.handle(self, message_header)
                 else :
                     continue
             elif self.state == ClientState.Turn and not MessageHeader.header_is_exit(message_header):

@@ -1,5 +1,5 @@
 from messages.add_friend_message import AddFriendMessage
-from messages.list_friend_message import ListFriendMessage
+from messages.message import Message
 from classes.message_header import MessageHeader
 from classes.message_type import MessageType
 from classes.client_state import ClientState
@@ -26,7 +26,7 @@ class FriendHandler:
 
     @staticmethod
     def input_list_friend_handle(sock_cli):
-        list_friend_message = ListFriendMessage()
+        list_friend_message = Message()
         message_string = pickle.dumps(list_friend_message)
         message_header = MessageHeader.make_header(
             MessageType.ListFriend,
