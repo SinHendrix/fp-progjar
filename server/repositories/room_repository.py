@@ -1,5 +1,6 @@
 from models.user import User
 from models.user_card import UserCard
+from models.card import Card
 from models.base import session
 from messages.join_room_message import JoinRoomMessage
 from utils.message import receive_message, send_message
@@ -10,6 +11,7 @@ from classes.room import Room
 import pickle
 import settings
 import copy
+from random import shuffle
 
 class RoomRepository:
     @staticmethod
@@ -41,6 +43,18 @@ class RoomRepository:
         send_message(client.client, message)
 
     @staticmethod
+    def random_cards(client):
+        client.cards_in_hand = []
+        client.cards_in_field = []
+        user_cards = UserCard.get_user_cards_by_username(client.username)
+
+        shuffle(user_cards)
+
+        for user_card in user_cards[:5]:
+            card = session.query(Card).filter_by(id=user_card[0]).all()[0]
+            client.cards_in_hand.append(card)
+
+    @staticmethod
     def join_room_handle(client, message_header):
         message_size = int(message_header[MessageHeader.message_size])
 
@@ -69,6 +83,7 @@ class RoomRepository:
                         send_message(person.client, person_message)
 
                         person.state = ClientState.Playing
+                        RoomRepository.random_cards(person)
 
                         room.players.append(client.username)
                         join_room_message.message = "Found opponent ({})".format(person.username)
@@ -91,6 +106,7 @@ class RoomRepository:
             return
 
         client.state = ClientState.WaitForTurn
+        RoomRepository.random_cards(client)
 
         join_room_message.success = True
         join_room_message = pickle.dumps(join_room_message)

@@ -18,8 +18,7 @@ class DeckRepository:
         message = receive_message(client.client, message_size)
         deck_message = pickle.loads(message)
 
-        user = User.get_user_by_username(client.username)[0]
-        user_cards = session.query(UserCard.card_id, func.count(UserCard.card_id)).group_by(UserCard.card_id).filter_by(user_id=user.id).all()
+        user_cards = UserCard.get_user_cards_by_username(client.username)
 
         message = ""
 

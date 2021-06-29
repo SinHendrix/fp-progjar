@@ -17,6 +17,9 @@ class Menu:
     ShopBack = 4
     SendMessage = 1
     SendPicture = 2
+    CheckCardInHand = 1
+    CheckCardInOwnField = 2
+    CheckCardInEnemyField = 3
     Help = 0
     Exit = 99
 

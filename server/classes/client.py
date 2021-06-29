@@ -10,6 +10,7 @@ from repositories.friend_repository import FriendRepository
 from repositories.deck_repository import DeckRepository
 from repositories.shop_repository import ShopRepository
 from repositories.room_repository import RoomRepository
+from repositories.game_card_repository import GameCardRepository
 
 
 class Client(threading.Thread):
@@ -22,6 +23,8 @@ class Client(threading.Thread):
         self.clients = clients
         self.rooms = rooms
         self.user_waiting = user_waiting
+        self.cards_in_hand = []
+        self.cards_in_field = []
 
     def change_state(new_state):
         self.state = new_state
@@ -64,9 +67,13 @@ class Client(threading.Thread):
                         ShopRepository.handle_check_point(self, message_header)
                     elif message_type == MessageType.Buy:
                         ShopRepository.handle_buy(self, message_header)
-                elif self.state == ClientState.Turn and not MessageHeader.header_is_exit(message_header):
-                    if message_type == MessageType.Attack:
-                        pass
+                elif ClientState.check_if_playing(self) and not MessageHeader.header_is_exit(message_header):
+                    if message_type == MessageType.CheckCardInHand:
+                        GameCardRepository.handle_check_card_in_hand(self, message_header)
+                    elif message_type == MessageType.CheckCardInOwnField:
+                        GameCardRepository.handle_check_card_in_own_field(self, message_header)
+                    elif message_type == MessageType.CheckCardInEnemyField:
+                        GameCardRepository.handle_check_card_in_enemy_field(self, message_header)
                 elif MessageHeader.header_is_exit(message_header):
                     print("Client ", self.address, " Exited")
                     self.clients.remove(self)

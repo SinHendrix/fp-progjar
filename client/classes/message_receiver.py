@@ -9,6 +9,7 @@ from handler.login_handler import LoginHandler
 from handler.deck_handler import DeckHandler
 from handler.shop_handler import ShopHandler
 from handler.room_handler import RoomHandler
+from handler.game_card_handler import GameCardHandler
 from utils.screen import clear_screen
 from utils.menu import Menu
 
@@ -48,6 +49,12 @@ class MessageReceiver(threading.Thread):
                 ShopHandler.receive_message_handle(self.client, message_header)
             elif message_type == MessageType.MyDeck:
                 DeckHandler.receive_message_handle(self.client, message_header)
+            elif message_type == MessageType.CheckCardInHand:
+                GameCardHandler.receive_message_handle(self.client, message_header)
+            elif message_type == MessageType.CheckCardInOwnField:
+                GameCardHandler.receive_message_handle(self.client, message_header)
+            elif message_type == MessageType.CheckCardInEnemyField:
+                GameCardHandler.receive_message_handle(self.client, message_header)
             else :
                 continue
 

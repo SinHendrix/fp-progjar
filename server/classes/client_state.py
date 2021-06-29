@@ -10,3 +10,10 @@ class ClientState(enum.Enum):
     WaitForTurn = 6
     Chat = 7
     Shop = 8
+
+    @staticmethod
+    def check_if_playing(client):
+        if client.state in [ClientState.Playing, ClientState.WaitingInRoom, ClientState.WaitingInWaitingRoom, ClientState.Turn, ClientState.WaitForTurn]:
+            return True
+        else:
+            return False

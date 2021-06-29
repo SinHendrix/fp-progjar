@@ -41,3 +41,19 @@ class Room:
                 break
 
         return room_name
+
+    @staticmethod
+    def search_for_opponent(client):
+        username = None
+
+        for room in client.rooms:
+            if room.players[0] == client.username:
+                username = room.players[1]
+                break
+            elif room.players[1] == client.username:
+                username = room.players[0]
+                break
+
+        for person in client.clients:
+            if person.username == username:
+                return person

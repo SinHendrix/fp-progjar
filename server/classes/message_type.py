@@ -15,3 +15,6 @@ class MessageType:
     CheckShop = 'check-shop'
     Buy = 'buy'
     CheckPoint = 'check-point'
+    CheckCardInHand = 'check-card-in-hand'
+    CheckCardInOwnField = 'check-card-in-own-field'
+    CheckCardInEnemyField = 'check-card-in-enemy-field'
