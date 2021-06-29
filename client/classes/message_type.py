@@ -7,7 +7,6 @@ class MessageType:
     File = 'file'
     JoinRoom = 'join-room'
     MakeRoom = 'make-room'
-    RandomRoom = 'random-room'
     GetRoom = 'random-room'
     Attack = 'attack'
     Exit = 'exit'

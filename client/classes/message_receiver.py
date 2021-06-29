@@ -8,6 +8,7 @@ from handler.friend_handler import FriendHandler
 from handler.login_handler import LoginHandler
 from handler.deck_handler import DeckHandler
 from handler.shop_handler import ShopHandler
+from handler.room_handler import RoomHandler
 from utils.screen import clear_screen
 from utils.menu import Menu
 
@@ -38,13 +39,9 @@ class MessageReceiver(threading.Thread):
             elif message_type == MessageType.File:
                 pass
             elif message_type == MessageType.MakeRoom:
-                pass
+                RoomHandler.receive_message_handle_make_room(self.client, message_header)
             elif message_type == MessageType.JoinRoom:
-                pass
-            elif message_type == MessageType.RandomRoom:
-                pass
-            elif message_type == MessageType.GetRoom:
-                pass
+                RoomHandler.receive_message_handle_join_room(self.client, message_header)
             elif message_type == MessageType.Attack:
                 pass
             elif message_type == MessageType.Shop:

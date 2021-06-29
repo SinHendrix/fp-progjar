@@ -11,6 +11,7 @@ from handler.register_handler import RegisterHandler
 from handler.friend_handler import FriendHandler
 from handler.deck_handler import DeckHandler
 from handler.shop_handler import ShopHandler
+from handler.room_handler import RoomHandler
 
 sock_cli = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock_cli.connect((settings.ADDRESS, settings.PORT))
@@ -45,13 +46,9 @@ if __name__ == "__main__":
                 elif command == Menu.Chat:
                     pass
                 elif command == Menu.JoinRoom:
-                    pass
+                    RoomHandler.input_join_room_handle(sock_cli)
                 elif command == Menu.MakeRoom:
-                    pass
-                elif command == Menu.JoinRoom:
-                    pass
-                elif command == Menu.RandomRoom:
-                    pass
+                    RoomHandler.input_make_room_handle(sock_cli)
                 elif command == Menu.Shop:
                     ShopHandler.input_shop_handle(sock_cli)
                 elif command == Menu.MyDeck:

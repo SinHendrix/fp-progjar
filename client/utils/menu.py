@@ -1,3 +1,6 @@
+from classes.client_state import ClientState
+import settings
+
 class Menu:
     Login = 1
     Register = 2
@@ -6,9 +9,8 @@ class Menu:
     ListFriend = 3
     JoinRoom = 4
     MakeRoom = 5
-    RandomRoom = 6
-    Shop = 7
-    MyDeck = 8
+    Shop = 6
+    MyDeck = 7
     CheckShop = 1
     Buy = 2
     CheckPoint = 3

@@ -10,13 +10,15 @@ sock_server.bind((settings.ADDRESS, settings.PORT))
 sock_server.listen(5)
 
 clients = []
+rooms = []
+user_waiting = None
 
 if __name__ == "__main__":
     print("Server running with address {}".format(settings.ADDRESS + ":" + str(settings.PORT)))
 
     while True:
         client_socket, client_address = sock_server.accept()
-        client = Client(client_socket, client_address, clients)
+        client = Client(client_socket, client_address, clients, rooms, user_waiting)
         client.start()
         clients.append(client)
 
