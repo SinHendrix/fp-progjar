@@ -18,3 +18,5 @@ class MessageType:
     CheckCardInHand = 'check-card-in-hand'
     CheckCardInOwnField = 'check-card-in-own-field'
     CheckCardInEnemyField = 'check-card-in-enemy-field'
+    DrawCard = 'draw-card'
+    Ingame = 'Ingame'

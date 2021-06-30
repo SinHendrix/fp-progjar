@@ -13,6 +13,7 @@ from handler.deck_handler import DeckHandler
 from handler.shop_handler import ShopHandler
 from handler.room_handler import RoomHandler
 from handler.game_card_handler import GameCardHandler
+from handler.ingame_handler import IngameHandler
 
 sock_cli = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock_cli.connect((settings.ADDRESS, settings.PORT))
@@ -70,6 +71,8 @@ if __name__ == "__main__":
                     GameCardHandler.input_check_card_in_own_field(sock_cli)
                 elif command == Menu.CheckCardInEnemyField:
                     GameCardHandler.input_check_card_in_enemy_field(sock_cli)
+                elif command == Menu.DrawCard:
+                    IngameHandler.input_draw_card(sock_cli)
             elif settings.CLIENT_STATE == ClientState.WaitForTurn and not Menu.check_if_help_or_menu(command) :
                 if command == Menu.CheckCardInHand:
                     GameCardHandler.input_check_card_in_hand(sock_cli)

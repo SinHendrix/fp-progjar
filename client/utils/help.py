@@ -8,7 +8,7 @@ class Help:
         ClientState.Chat : "1. Send Message\n2. Send Picture",
         ClientState.Shop : "1. Check Shop\n2. Buy\n3. Check Point\n4. Back",
         ClientState.WaitingInRoom : "Waiting in room...",
-        ClientState.Playing : "1. Check Card in Hand\n2. Check Card in Own Field\n3. Check Card in Enemy Field",
+        ClientState.Playing : "1. Check Card in Hand\n2. Check Card in Own Field\n3. Check Card in Enemy Field\n4. Draw Card",
         ClientState.WaitForTurn : "1. Check Card in Hand\n2. Check Card in Own Field\n3. Check Card in Enemy Field",
     }
 

@@ -13,16 +13,24 @@ import settings
 
 class GameCardRepository:
     @staticmethod
+    def print_cards(cards):
+        counter = 1
+        message = ""
+        if len(cards) < 1:
+            message = "Empty"
+        else :
+            for card in cards:
+                message += "{}. {}\nAttack : {}\nDefence : {}\n".format(counter, card.name, card.attack, card.defence)
+                counter += 1
+
+        return message
+
+    @staticmethod
     def handle_check_card_in_hand(client, message_header):
         message_size = int(message_header[MessageHeader.message_size])
-
         message = receive_message(client.client, message_size)
         card_message = pickle.loads(message)
-
-        message = ""
-
-        for card in client.cards_in_hand:
-            message += "- {}\nAttack : {}\nDefence : {}".format(card.name, card.attack, card.defence)
+        message = GameCardRepository.print_cards(client.cards_in_hand)
 
         card_message.success = True
         card_message.message = message
@@ -40,17 +48,9 @@ class GameCardRepository:
     @staticmethod
     def handle_check_card_in_own_field(client, message_header):
         message_size = int(message_header[MessageHeader.message_size])
-
         message = receive_message(client.client, message_size)
         card_message = pickle.loads(message)
-
-        message = ""
-
-        if len(client.cards_in_field) < 1:
-            message = "The field is empty"
-        else :
-            for card in client.cards_in_field:
-                message += "- {}\nAttack : {}\nDefence : {}".format(card.name, card.attack, card.defence)
+        message = GameCardRepository.print_cards(client.cards_in_field)
 
         card_message.success = True
         card_message.message = message
@@ -68,19 +68,10 @@ class GameCardRepository:
     @staticmethod
     def handle_check_card_in_enemy_field(client, message_header):
         message_size = int(message_header[MessageHeader.message_size])
-
         message = receive_message(client.client, message_size)
         card_message = pickle.loads(message)
-
-        message = ""
-
         person = Room.search_for_opponent(client)
-
-        if len(person.cards_in_field) < 1:
-            message = "The field is empty"
-        else :
-            for card in person.cards_in_field:
-                message += "- {}\nAttack : {}\nDefence : {}".format(card.name, card.attack, card.defence)
+        message = GameCardRepository.print_cards(person.cards_in_field)
 
         card_message.success = True
         card_message.message = message

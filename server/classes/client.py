@@ -11,6 +11,7 @@ from repositories.deck_repository import DeckRepository
 from repositories.shop_repository import ShopRepository
 from repositories.room_repository import RoomRepository
 from repositories.game_card_repository import GameCardRepository
+from repositories.ingame_repository import IngameRepository
 
 
 class Client(threading.Thread):
@@ -74,6 +75,8 @@ class Client(threading.Thread):
                         GameCardRepository.handle_check_card_in_own_field(self, message_header)
                     elif message_type == MessageType.CheckCardInEnemyField:
                         GameCardRepository.handle_check_card_in_enemy_field(self, message_header)
+                    elif message_type == MessageType.DrawCard:
+                        IngameRepository.handle_draw_card(self, message_header)
                 elif MessageHeader.header_is_exit(message_header):
                     print("Client ", self.address, " Exited")
                     self.clients.remove(self)

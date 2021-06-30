@@ -10,6 +10,7 @@ from handler.deck_handler import DeckHandler
 from handler.shop_handler import ShopHandler
 from handler.room_handler import RoomHandler
 from handler.game_card_handler import GameCardHandler
+from handler.ingame_handler import IngameHandler
 from utils.screen import clear_screen
 from utils.menu import Menu
 
@@ -55,6 +56,8 @@ class MessageReceiver(threading.Thread):
                 GameCardHandler.receive_message_handle(self.client, message_header)
             elif message_type == MessageType.CheckCardInEnemyField:
                 GameCardHandler.receive_message_handle(self.client, message_header)
+            elif message_type == MessageType.Ingame:
+                IngameHandler.receive_message_handle(self.client, message_header)
             else :
                 continue
 
