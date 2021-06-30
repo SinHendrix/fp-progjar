@@ -27,6 +27,8 @@ class MessageReceiver(threading.Thread):
                 break
 
             message_type = message_header[MessageHeader.message_type]
+            
+            print('\n', end='', flush=True)
 
             if message_type == MessageType.Login:
                 LoginHandler.receive_message_handle(self.client, message_header)

@@ -25,3 +25,9 @@ class User(Base):
     @staticmethod
     def get_user_by_username(username):
         return session.query(User).filter_by(username=username).all()
+
+    @staticmethod
+    def add_point_for_user(username, point):
+        user = User.get_user_by_username(username)[0]
+        session.query(User).filter_by(id=user.id).update({"points":user.points + point})
+        session.commit()

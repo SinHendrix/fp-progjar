@@ -8,6 +8,7 @@ from classes.message_header import MessageHeader
 from classes.message_type import MessageType
 from classes.client_state import ClientState
 from classes.room import Room
+from classes.ingame_card import IngameCard
 import pickle
 import settings
 import copy
@@ -50,9 +51,10 @@ class RoomRepository:
 
         shuffle(user_cards)
 
-        for user_card in user_cards[:5]:
+        for user_card in user_cards[:settings.NUMBER_OF_CARDS]:
             card = session.query(Card).filter_by(id=user_card[0]).all()[0]
-            client.cards_in_hand.append(card)
+
+            client.cards_in_hand.append(IngameCard.generate(card.name, card.attack, card.defence))
 
     @staticmethod
     def join_room_handle(client, message_header):

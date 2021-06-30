@@ -5,19 +5,6 @@ class Room:
     def __init__(self, name, players = []):
         self.name = name
         self.players = players
-        self.turn_player_0 = True
-        self.turn_player_0_counter = 0
-        self.turn_player_1_counter = 0
-        self.round = 1
-
-    def change_turn():
-        self.turn_player_0 = not self.turn_player_0
-
-    def is_first_round():
-        return self.round == 1
-
-    def next_round():
-        self.round += 1
 
     def is_room_full():
         return len(self.players) >= 2
@@ -57,3 +44,14 @@ class Room:
         for person in client.clients:
             if person.username == username:
                 return person
+
+    @staticmethod
+    def delete_room(client):
+        selected_room = None
+
+        for room in client.rooms:
+            if room.players[0] == client.username or room.players[1] == client.username:
+                selected_room = room
+                break
+
+        client.rooms.remove(selected_room)

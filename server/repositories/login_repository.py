@@ -20,9 +20,19 @@ class LoginRepository:
             password=login_message.password
         ).all()
 
-        if len(result) < 1:
+        logged_in = False
+
+        for person in client.clients:
+            if person.username == login_message.username:
+                logged_in = True
+                break
+
+        if len(result) < 1 or logged_in:
             login_message.success = False
-            login_message.message = "User not found"
+            if logged_in:
+                login_message.message = "User already login"
+            else:
+                login_message.message = "User not found"
             message = pickle.dumps(login_message)
             new_message_header = MessageHeader.make_header(
                 MessageType.Login,

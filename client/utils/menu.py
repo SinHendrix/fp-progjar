@@ -21,6 +21,7 @@ class Menu:
     CheckCardInOwnField = 2
     CheckCardInEnemyField = 3
     DrawCard = 4
+    Attack = 5
     Help = 0
     Exit = 99
 

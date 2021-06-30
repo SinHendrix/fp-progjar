@@ -1,4 +1,5 @@
 import threading
+import traceback
 import settings
 import re
 from classes.message_header import MessageHeader
@@ -26,9 +27,6 @@ class Client(threading.Thread):
         self.user_waiting = user_waiting
         self.cards_in_hand = []
         self.cards_in_field = []
-
-    def change_state(new_state):
-        self.state = new_state
 
     def run(self):
         while True:
@@ -77,9 +75,12 @@ class Client(threading.Thread):
                         GameCardRepository.handle_check_card_in_enemy_field(self, message_header)
                     elif message_type == MessageType.DrawCard:
                         IngameRepository.handle_draw_card(self, message_header)
+                    elif message_type == MessageType.Attack:
+                        IngameRepository.handle_attack(self, message_header)
                 elif MessageHeader.header_is_exit(message_header):
                     print("Client ", self.address, " Exited")
                     self.clients.remove(self)
                     break
             except Exception as e:
                 print(e, flush=True)
+                print(traceback.format_exc(), flush=True)
