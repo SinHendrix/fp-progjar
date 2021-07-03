@@ -14,6 +14,7 @@ from handler.shop_handler import ShopHandler
 from handler.room_handler import RoomHandler
 from handler.game_card_handler import GameCardHandler
 from handler.ingame_handler import IngameHandler
+from handler.chat_handler import ChatHandler
 
 sock_cli = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock_cli.connect((settings.ADDRESS, settings.PORT))
@@ -46,7 +47,7 @@ if __name__ == "__main__":
                 elif command == Menu.ListFriend:
                     FriendHandler.input_list_friend_handle(sock_cli)
                 elif command == Menu.Chat:
-                    pass
+                    ChatHandler.input_chat(sock_cli)
                 elif command == Menu.JoinRoom:
                     RoomHandler.input_join_room_handle(sock_cli)
                 elif command == Menu.MakeRoom:
@@ -82,6 +83,11 @@ if __name__ == "__main__":
                     GameCardHandler.input_check_card_in_own_field(sock_cli)
                 elif command == Menu.CheckCardInEnemyField:
                     GameCardHandler.input_check_card_in_enemy_field(sock_cli)
+            elif settings.CLIENT_STATE == ClientState.Chat and not Menu.check_if_help_or_menu(command) :
+                if command == Menu.SendMessage:
+                    ChatHandler.input_text_message(sock_cli)
+                elif command == Menu.SendPicture:
+                    ChatHandler.input_file_message(sock_cli)
             elif command == Menu.Help :
                 Help.get_menu()
             elif command == Menu.Exit and not ClientState.check_if_playing():
