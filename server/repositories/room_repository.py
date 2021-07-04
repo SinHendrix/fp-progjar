@@ -66,6 +66,21 @@ class RoomRepository:
         room_found = False
         for room in client.rooms:
             if room.name == join_room_message.name:
+                if len(room.players) >= 2:
+                    join_room_message.success = False
+                    join_room_message.message = "Room Full"
+                    join_room_message = pickle.dumps(join_room_message)
+                    new_message_header = MessageHeader.make_header(
+                        MessageType.JoinRoom,
+                        client.username,
+                        len(join_room_message),
+                        'server'
+                    )
+
+                    send_message(client.client, bytes(new_message_header, settings.ENCODING))
+                    send_message(client.client, join_room_message)
+                    return
+
                 room_found = True
                 person_message = copy.copy(join_room_message)
                 person_message.message = "Found opponent ({})".format(client.username)
