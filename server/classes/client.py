@@ -13,6 +13,7 @@ from repositories.shop_repository import ShopRepository
 from repositories.room_repository import RoomRepository
 from repositories.game_card_repository import GameCardRepository
 from repositories.ingame_repository import IngameRepository
+from repositories.chat_repository import ChatRepository
 
 
 class Client(threading.Thread):
@@ -49,9 +50,9 @@ class Client(threading.Thread):
                     elif message_type == MessageType.ListFriend:
                         FriendRepository.handle_list_friend(self, message_header)
                     elif message_type == MessageType.Message:
-                        pass
+                        ChatRepository.handle_text_message(self, message_header)
                     elif message_type == MessageType.File:
-                        pass
+                        ChatRepository.handle_file_message(self, message_header)
                     elif message_type == MessageType.MakeRoom:
                         RoomRepository.make_room_handle(self, message_header)
                     elif message_type == MessageType.JoinRoom:

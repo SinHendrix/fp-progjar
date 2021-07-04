@@ -11,6 +11,7 @@ from handler.shop_handler import ShopHandler
 from handler.room_handler import RoomHandler
 from handler.game_card_handler import GameCardHandler
 from handler.ingame_handler import IngameHandler
+from handler.chat_handler import ChatHandler
 from utils.screen import clear_screen
 from utils.menu import Menu
 
@@ -27,7 +28,7 @@ class MessageReceiver(threading.Thread):
                 break
 
             message_type = message_header[MessageHeader.message_type]
-            
+
             print('\n', end='', flush=True)
 
             if message_type == MessageType.Login:
@@ -39,9 +40,9 @@ class MessageReceiver(threading.Thread):
             elif message_type == MessageType.ListFriend:
                 FriendHandler.receive_message_handle(self.client, message_header)
             elif message_type == MessageType.Message:
-                pass
+                ChatHandler.receive_text_message_handle(self.client, message_header)
             elif message_type == MessageType.File:
-                pass
+                ChatHandler.receive_file_message_handle(self.client, message_header)
             elif message_type == MessageType.MakeRoom:
                 RoomHandler.receive_message_handle_make_room(self.client, message_header)
             elif message_type == MessageType.JoinRoom:

@@ -69,6 +69,7 @@ class FriendRepository:
 
         session.add(relationship_1)
         session.add(relationship_2)
+        session.commit()
 
         add_friend_message.success = True
         add_friend_message.message = "Add Friend success!!"

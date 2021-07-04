@@ -10,6 +10,7 @@ class Help:
         ClientState.WaitingInRoom : "Waiting in room...",
         ClientState.Playing : "1. Check Card in Hand\n2. Check Card in Own Field\n3. Check Card in Enemy Field\n4. Draw Card\n5. Attack",
         ClientState.WaitForTurn : "1. Check Card in Hand\n2. Check Card in Own Field\n3. Check Card in Enemy Field",
+        ClientState.Chat : "1. Send Text Message\n2. Send Picture",
     }
 
     general = "0. Help\n99. Exit"
