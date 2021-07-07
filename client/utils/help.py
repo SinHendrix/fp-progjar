@@ -21,3 +21,6 @@ class Help:
 
         if not ClientState.check_if_playing():
             print(Help.general)
+        
+        if settings.CLIENT_STATE == ClientState.WaitingInRoom:
+            print("Room Code : {}\n1. Send Message to Friends".format(settings.ROOM_CODE))

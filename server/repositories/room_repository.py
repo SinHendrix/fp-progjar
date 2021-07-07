@@ -32,6 +32,7 @@ class RoomRepository:
 
         message.success = True
         message.message = "Your room code is : {}".format(room.name)
+        message.name = room.name
         message = pickle.dumps(message)
         new_message_header = MessageHeader.make_header(
             MessageType.MakeRoom,

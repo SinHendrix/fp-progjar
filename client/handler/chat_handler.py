@@ -14,7 +14,7 @@ class ChatHandler:
         settings.CLIENT_STATE = ClientState.Chat
 
     @staticmethod
-    def input_text_message(sock_cli):
+    def input_text_message(sock_cli, in_waiting_room=False):
         destination = input("Insert destination of your message (bcast for broadcast to your friends) : ")
         message = input("Insert your message : ")
         text_message = Message()
@@ -26,12 +26,17 @@ class ChatHandler:
             len(message_string),
             settings.USERNAME
         )
+
         send_message(sock_cli, bytes(message_header, settings.ENCODING))
         send_message(sock_cli, message_string)
-        settings.CLIENT_STATE = ClientState.Menu
+
+        if in_waiting_room:
+            settings.CLIENT_STATE = ClientState.WaitingInRoom
+        else :
+            settings.CLIENT_STATE = ClientState.Menu
 
     @staticmethod
-    def input_file_message(sock_cli):
+    def input_file_message(sock_cli, in_waiting_room=False):
         destination = input("Insert destination of your message (bcast for broadcast to your friends) : ")
         file_name = input("Insert picture name : ")
         file_route = settings.FILE_SENDED_ROUTE + file_name
@@ -54,7 +59,11 @@ class ChatHandler:
 
         send_message(sock_cli, bytes(message_header, settings.ENCODING))
         send_message(sock_cli, data)
-        settings.CLIENT_STATE = ClientState.Menu
+
+        if in_waiting_room:
+            settings.CLIENT_STATE = ClientState.WaitingInRoom
+        else :
+            settings.CLIENT_STATE = ClientState.Menu
 
     @staticmethod
     def receive_text_message_handle(sock_cli, message_header):

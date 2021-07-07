@@ -88,6 +88,9 @@ if __name__ == "__main__":
                     ChatHandler.input_text_message(sock_cli)
                 elif command == Menu.SendPicture:
                     ChatHandler.input_file_message(sock_cli)
+            elif settings.CLIENT_STATE == ClientState.WaitingInRoom and not Menu.check_if_help_or_menu(command) :
+                if command == Menu.SendMessage:
+                    ChatHandler.input_text_message(sock_cli, in_waiting_room=True)
             elif command == Menu.Help :
                 Help.get_menu()
             elif command == Menu.Exit and not ClientState.check_if_playing():

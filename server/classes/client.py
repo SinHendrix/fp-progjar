@@ -67,6 +67,9 @@ class Client(threading.Thread):
                         ShopRepository.handle_check_point(self, message_header)
                     elif message_type == MessageType.Buy:
                         ShopRepository.handle_buy(self, message_header)
+                elif self.state == ClientState.WaitingInRoom and not MessageHeader.header_is_exit(message_header):
+                    if message_type == MessageType.Message:
+                        ChatRepository.handle_text_message(self, message_header)
                 elif ClientState.check_if_playing(self) and not MessageHeader.header_is_exit(message_header):
                     if message_type == MessageType.CheckCardInHand:
                         GameCardRepository.handle_check_card_in_hand(self, message_header)

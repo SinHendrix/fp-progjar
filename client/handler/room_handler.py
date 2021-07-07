@@ -10,7 +10,7 @@ import settings
 class RoomHandler:
     @staticmethod
     def input_make_room_handle(sock_cli):
-        message = Message()
+        message = JoinRoomMessage("")
         message_string = pickle.dumps(message)
         message_header = MessageHeader.make_header(
             MessageType.MakeRoom,
@@ -44,6 +44,7 @@ class RoomHandler:
         print(message.message, flush=True)
 
         if message.success:
+            settings.ROOM_CODE = message.name
             settings.CLIENT_STATE = ClientState.WaitingInRoom
 
     @staticmethod
