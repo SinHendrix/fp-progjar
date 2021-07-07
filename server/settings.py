@@ -5,3 +5,4 @@ ENCODING = 'utf-8'
 BATCH_SIZE = 1024
 SQLITE_URI = "sqlite:///server.db"
 NUMBER_OF_CARDS = 5
+WAITING_ROOM = None

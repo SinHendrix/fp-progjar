@@ -11,6 +11,7 @@ class Menu:
     MakeRoom = 5
     Shop = 6
     MyDeck = 7
+    RandomRoom = 8
     CheckShop = 1
     Buy = 2
     CheckPoint = 3

@@ -55,6 +55,8 @@ class Client(threading.Thread):
                         ChatRepository.handle_file_message(self, message_header)
                     elif message_type == MessageType.MakeRoom:
                         RoomRepository.make_room_handle(self, message_header)
+                    elif message_type == MessageType.RandomRoom:
+                        RoomRepository.random_room_handle(self, message_header)
                     elif message_type == MessageType.JoinRoom:
                         RoomRepository.join_room_handle(self, message_header)
                     elif message_type == MessageType.Shop:

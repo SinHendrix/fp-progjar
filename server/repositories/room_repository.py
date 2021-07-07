@@ -14,6 +14,7 @@ import settings
 import copy
 from random import shuffle
 
+
 class RoomRepository:
     @staticmethod
     def make_room_handle(client, message_header):
@@ -41,7 +42,8 @@ class RoomRepository:
             'server'
         )
 
-        send_message(client.client, bytes(new_message_header, settings.ENCODING))
+        send_message(client.client, bytes(
+            new_message_header, settings.ENCODING))
         send_message(client.client, message)
 
     @staticmethod
@@ -55,7 +57,8 @@ class RoomRepository:
         for user_card in user_cards[:settings.NUMBER_OF_CARDS]:
             card = session.query(Card).filter_by(id=user_card[0]).all()[0]
 
-            client.cards_in_hand.append(IngameCard.generate(card.name, card.attack, card.defence))
+            client.cards_in_hand.append(IngameCard.generate(
+                card.name, card.attack, card.defence))
 
     @staticmethod
     def join_room_handle(client, message_header):
@@ -78,13 +81,15 @@ class RoomRepository:
                         'server'
                     )
 
-                    send_message(client.client, bytes(new_message_header, settings.ENCODING))
+                    send_message(client.client, bytes(
+                        new_message_header, settings.ENCODING))
                     send_message(client.client, join_room_message)
                     return
 
                 room_found = True
                 person_message = copy.copy(join_room_message)
-                person_message.message = "Found opponent ({})".format(client.username)
+                person_message.message = "Found opponent ({})".format(
+                    client.username)
                 person_message.success = True
                 person_message.is_turn = True
                 person_message = pickle.dumps(person_message)
@@ -97,14 +102,16 @@ class RoomRepository:
 
                 for person in client.clients:
                     if person.username == room.players[0]:
-                        send_message(person.client, bytes(person_new_message_header, settings.ENCODING))
+                        send_message(person.client, bytes(
+                            person_new_message_header, settings.ENCODING))
                         send_message(person.client, person_message)
 
                         person.state = ClientState.Playing
                         RoomRepository.random_cards(person)
 
                         room.players.append(client.username)
-                        join_room_message.message = "Found opponent ({})".format(person.username)
+                        join_room_message.message = "Found opponent ({})".format(
+                            person.username)
                         break
                 break
 
@@ -119,7 +126,8 @@ class RoomRepository:
                 'server'
             )
 
-            send_message(client.client, bytes(new_message_header, settings.ENCODING))
+            send_message(client.client, bytes(
+                new_message_header, settings.ENCODING))
             send_message(client.client, join_room_message)
             return
 
@@ -135,5 +143,76 @@ class RoomRepository:
             'server'
         )
 
-        send_message(client.client, bytes(new_message_header, settings.ENCODING))
+        send_message(client.client, bytes(
+            new_message_header, settings.ENCODING))
         send_message(client.client, join_room_message)
+
+    @staticmethod
+    def random_room_handle(client, message_header):
+        message_size = int(message_header[MessageHeader.message_size])
+
+        message = receive_message(client.client, message_size)
+        message = pickle.loads(message)
+
+        if settings.WAITING_ROOM:
+            room = Room(
+                Room.random_room_name(client.rooms),
+                players=[copy.copy(settings.WAITING_ROOM), client.username]
+            )
+
+            client.rooms.append(room)
+
+            person_message = copy.copy(message)
+            person_message.message = "Found opponent ({})".format(
+                client.username)
+            person_message.success = True
+            person_message.is_turn = True
+            person_message = pickle.dumps(person_message)
+            person_new_message_header = MessageHeader.make_header(
+                MessageType.JoinRoom,
+                client.username,
+                len(person_message),
+                'server'
+            )
+
+            for person in client.clients:
+                if person.username == room.players[0]:
+                    send_message(person.client, bytes(
+                        person_new_message_header, settings.ENCODING))
+                    send_message(person.client, person_message)
+
+                    person.state = ClientState.Playing
+                    RoomRepository.random_cards(person)
+                    break
+
+            message.success = True
+            message.message = "Found opponent ({})".format(
+                settings.WAITING_ROOM)
+            message = pickle.dumps(message)
+            new_message_header = MessageHeader.make_header(
+                MessageType.JoinRoom,
+                client.username,
+                len(message),
+                'server'
+            )
+            client.state = ClientState.WaitForTurn
+            settings.WAITING_ROOM = None
+
+            RoomRepository.random_cards(client)
+        else:
+            client.state = ClientState.WaitingInRoom
+            settings.WAITING_ROOM = client.username
+
+            message.success = True
+            message.message = "In waiting room"
+            message = pickle.dumps(message)
+            new_message_header = MessageHeader.make_header(
+                MessageType.RandomRoom,
+                client.username,
+                len(message),
+                'server'
+            )
+
+        send_message(client.client, bytes(
+            new_message_header, settings.ENCODING))
+        send_message(client.client, message)

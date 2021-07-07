@@ -47,6 +47,8 @@ class MessageReceiver(threading.Thread):
                 RoomHandler.receive_message_handle_make_room(self.client, message_header)
             elif message_type == MessageType.JoinRoom:
                 RoomHandler.receive_message_handle_join_room(self.client, message_header)
+            elif message_type == MessageType.RandomRoom:
+                RoomHandler.receive_message_handle_random_room(self.client, message_header)
             elif message_type == MessageType.Attack:
                 pass
             elif message_type == MessageType.Shop:

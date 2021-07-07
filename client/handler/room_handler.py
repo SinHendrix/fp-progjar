@@ -36,6 +36,19 @@ class RoomHandler:
         send_message(sock_cli, message_string)
 
     @staticmethod
+    def input_random_room_handle(sock_cli):
+        message = JoinRoomMessage("")
+        message_string = pickle.dumps(message)
+        message_header = MessageHeader.make_header(
+            MessageType.RandomRoom,
+            'server',
+            len(message_string),
+            settings.USERNAME
+        )
+        send_message(sock_cli, bytes(message_header, settings.ENCODING))
+        send_message(sock_cli, message_string)
+
+    @staticmethod
     def receive_message_handle_make_room(sock_cli, message_header):
         message_size = message_header[MessageHeader.message_size]
         message = receive_message(sock_cli, message_size)
@@ -60,3 +73,14 @@ class RoomHandler:
                 settings.CLIENT_STATE = ClientState.Playing
             else :
                 settings.CLIENT_STATE = ClientState.WaitForTurn
+
+    @staticmethod
+    def receive_message_handle_random_room(sock_cli, message_header):
+        message_size = message_header[MessageHeader.message_size]
+        message = receive_message(sock_cli, message_size)
+        message = pickle.loads(message)
+
+        print(message.message, flush=True)
+
+        if message.success:
+            settings.CLIENT_STATE = ClientState.WaitingInWaitingRoom

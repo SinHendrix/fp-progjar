@@ -56,6 +56,8 @@ if __name__ == "__main__":
                     ShopHandler.input_shop_handle(sock_cli)
                 elif command == Menu.MyDeck:
                     DeckHandler.handle(sock_cli)
+                elif command == Menu.RandomRoom:
+                    RoomHandler.input_random_room_handle(sock_cli)
             elif settings.CLIENT_STATE == ClientState.Shop and not Menu.check_if_help_or_menu(command) :
                 if command == Menu.CheckShop:
                     ShopHandler.input_check_shop_handle(sock_cli)
